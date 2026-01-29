@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login e Cadastro - Portal Solidário</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f39c12;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #777;
+            transition: 0.3s;
+        }
+
+        .tab-btn.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box; /* Garante que o padding não quebre o layout */
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        button.submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button.submit-btn:hover {
+            background-color: #357abd;
+        }
+
+        .form-content {
+            display: none;
+        }
+
+        .form-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Bem-vindo</h2>
+    
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openTab(event, 'voluntario')">Sou Voluntário</button>
+        <button class="tab-btn" onclick="openTab(event, 'organizacao')">Sou Organização</button>
+    </div>
+
+    <div id="voluntario" class="form-content active">
+        <form action="#">
+            <div class="form-group">
+                <label for="nome-vol">Nome Completo</label>
+                <input type="text" id="nome-vol" placeholder="Ex: Maria Silva" required>
+            </div>
+            <div class="form-group">
+                <label for="email-vol">E-mail</label>
+                <input type="email" id="email-vol" placeholder="email@exemplo.com" required>
+            </div>
+            <div class="form-group">
+                <label for="tel-vol">Telefone</label>
+                <input type="tel" id="tel-vol" placeholder="(00) 00000-0000" required>
+            </div>
+            <div class="form-group">
+                <label for="pass-vol">Senha</label>
+                <input type="password" id="pass-vol" placeholder="Mínimo 6 caracteres" required>
+            </div>
+            <button type="submit" class="submit-btn">Cadastrar como Voluntário</button>
+        </form>
+    </div>
+
+    <div id="organizacao" class="form-content">
+        <form action="#">
+            <div class="form-group">
+                <label for="nome-org">Nome da Organização</label>
+                <input type="text" id="nome-org" placeholder="Nome da ONG ou Instituição" required>
+            </div>
+            <div class="form-group">
+                <label for="email-org">E-mail Corporativo</label>
+                <input type="email" id="email-org" placeholder="contato@ong.org" required>
+            </div>
+            <div class="form-group">
+                <label for="tel-org">Telefone de Contato</label>
+                <input type="tel" id="tel-org" placeholder="(00) 0000-0000" required>
+            </div>
+            <div class="form-group">
+                <label for="end-org">Endereço Completo</label>
+                <input type="text" id="end-org" placeholder="Rua, Número, Bairro, Cidade" required>
+            </div>
+            <div class="form-group">
+                <label for="desc-org">Descrição da Causa</label>
+                <textarea id="desc-org" placeholder="Conte brevemente o objetivo da organização..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="pass-org">Senha</label>
+                <input type="password" id="pass-org" required>
+            </div>
+            <button type="submit" class="submit-btn" style="background-color: var(--secondary-color);">Cadastrar Organização</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        
+        // Esconde todos os formulários
+        tabcontent = document.getElementsByClassName("form-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Remove a classe "active" de todos os botões
+        tablinks = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Mostra o formulário atual e adiciona classe "active" ao botão
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+
+</body>
+</html>
