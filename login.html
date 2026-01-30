@@ -1,199 +1,114 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login e Cadastro - Portal Solidário</title>
+    <title>Iniciar Sessão - Voluntariados</title>
     <style>
-        :root {
-            --primary-color: #4a90e2;
-            --secondary-color: #f39c12;
-            --bg-color: #f4f7f6;
-            --text-color: #333;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-        }
-
-        .container {
-            background: #fff;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 500px;
-        }
-
-        h2 {
-            text-align: center;
-            color: var(--text-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .tabs {
-            display: flex;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid #ddd;
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 10px;
-            cursor: pointer;
-            border: none;
-            background: none;
-            font-size: 1rem;
-            font-weight: bold;
-            color: #777;
-            transition: 0.3s;
-        }
-
-        .tab-btn.active {
-            color: var(--primary-color);
-            border-bottom: 3px solid var(--primary-color);
-        }
-
-        .form-group {
-            margin-bottom: 1.2rem;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            box-sizing: border-box; /* Garante que o padding não quebre o layout */
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        button.submit-btn {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        button.submit-btn:hover {
-            background-color: #357abd;
-        }
-
-        .form-content {
-            display: none;
-        }
-
-        .form-content.active {
-            display: block;
-        }
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial;margin:0;background:#f9fdf8}
+        .box{max-width:520px;margin:80px auto;background:#fff;padding:28px;border-radius:12px;border:1px solid #e8f5e1}
+        label{display:block;margin-bottom:6px;font-weight:600}
+        input,select{width:100%;padding:10px;border-radius:8px;border:1px solid #e8f5e1;margin-bottom:12px}
+        button{background:#10b981;color:#fff;padding:10px 14px;border-radius:8px;border:none;cursor:pointer}
     </style>
 </head>
 <body>
+    <div class="box">
+        <h2>Iniciar Sessão / Entrar</h2>
+        <p style="color:#6b7280;margin-bottom:12px">Escolha o tipo de conta e introduza os seus dados. Pode navegar sem conta depois de fechar esta janela.</p>
 
-<div class="container">
-    <h2>Bem-vindo</h2>
-    
-    <div class="tabs">
-        <button class="tab-btn active" onclick="openTab(event, 'voluntario')">Sou Voluntário</button>
-        <button class="tab-btn" onclick="openTab(event, 'organizacao')">Sou Organização</button>
-    </div>
+        <label for="role">Tipo de Conta</label>
+        <div style="display:flex;gap:8px;margin-bottom:12px">
+            <button id="roleVolunteer" class="role-btn active">Voluntário</button>
+            <button id="roleOrg" class="role-btn">Organização</button>
+        </div>
 
-    <div id="voluntario" class="form-content active">
-        <form action="#">
-            <div class="form-group">
-                <label for="nome-vol">Nome Completo</label>
-                <input type="text" id="nome-vol" placeholder="Ex: Maria Silva" required>
+        <form id="signinForm">
+            <div id="volunteerFields">
+                <label for="volEmail">Email</label>
+                <input id="volEmail" type="email" placeholder="seu@exemplo.com" required />
+
+                <label for="volPassword">Senha</label>
+                <input id="volPassword" type="password" placeholder="********" required />
+
+                <label for="volPhone">Telefone</label>
+                <input id="volPhone" type="tel" placeholder="(00) 90000-0000" />
             </div>
-            <div class="form-group">
-                <label for="email-vol">E-mail</label>
-                <input type="email" id="email-vol" placeholder="email@exemplo.com" required>
+
+            <div id="orgFields" style="display:none">
+                <label for="orgName">Nome da Organização</label>
+                <input id="orgName" placeholder="Nome da organização" />
+
+                <label for="orgEmail">Email</label>
+                <input id="orgEmail" type="email" placeholder="contato@org.pt" />
+
+                <label for="orgPassword">Senha</label>
+                <input id="orgPassword" type="password" placeholder="********" />
+
+                <label for="orgPhone">Telefone</label>
+                <input id="orgPhone" type="tel" placeholder="(00) 90000-0000" />
             </div>
-            <div class="form-group">
-                <label for="tel-vol">Telefone</label>
-                <input type="tel" id="tel-vol" placeholder="(00) 00000-0000" required>
+
+            <div style="display:flex;gap:10px;margin-top:10px">
+                <button type="submit" id="submitBtn">Entrar</button>
+                <a href="index.html" style="display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:8px;border:1px solid #e8f5e1;color:#6b7280;background:#fff;text-decoration:none">Voltar</a>
             </div>
-            <div class="form-group">
-                <label for="pass-vol">Senha</label>
-                <input type="password" id="pass-vol" placeholder="Mínimo 6 caracteres" required>
-            </div>
-            <button type="submit" class="submit-btn">Cadastrar como Voluntário</button>
         </form>
     </div>
 
-    <div id="organizacao" class="form-content">
-        <form action="#">
-            <div class="form-group">
-                <label for="nome-org">Nome da Organização</label>
-                <input type="text" id="nome-org" placeholder="Nome da ONG ou Instituição" required>
-            </div>
-            <div class="form-group">
-                <label for="email-org">E-mail Corporativo</label>
-                <input type="email" id="email-org" placeholder="contato@ong.org" required>
-            </div>
-            <div class="form-group">
-                <label for="tel-org">Telefone de Contato</label>
-                <input type="tel" id="tel-org" placeholder="(00) 0000-0000" required>
-            </div>
-            <div class="form-group">
-                <label for="end-org">Endereço Completo</label>
-                <input type="text" id="end-org" placeholder="Rua, Número, Bairro, Cidade" required>
-            </div>
-            <div class="form-group">
-                <label for="desc-org">Descrição da Causa</label>
-                <textarea id="desc-org" placeholder="Conte brevemente o objetivo da organização..."></textarea>
-            </div>
-            <div class="form-group">
-                <label for="pass-org">Senha</label>
-                <input type="password" id="pass-org" required>
-            </div>
-            <button type="submit" class="submit-btn" style="background-color: var(--secondary-color);">Cadastrar Organização</button>
-        </form>
-    </div>
-</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/bootstrap-init.js"></script>
+    <script src="js/site.js"></script>
+    <script>
+        (function(){
+            const roleVolunteer = document.getElementById('roleVolunteer');
+            const roleOrg = document.getElementById('roleOrg');
+            const volFields = document.getElementById('volunteerFields');
+            const orgFields = document.getElementById('orgFields');
 
-<script>
-    function openTab(evt, tabName) {
-        var i, tabcontent, tablinks;
-        
-        // Esconde todos os formulários
-        tabcontent = document.getElementsByClassName("form-content");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
+            function setRole(role){
+                if(role === 'organization'){
+                    roleOrg.classList.add('active'); roleVolunteer.classList.remove('active');
+                    volFields.style.display = 'none'; orgFields.style.display = 'block';
+                } else {
+                    roleVolunteer.classList.add('active'); roleOrg.classList.remove('active');
+                    volFields.style.display = 'block'; orgFields.style.display = 'none';
+                }
+            }
 
-        // Remove a classe "active" de todos os botões
-        tablinks = document.getElementsByClassName("tab-btn");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
+            roleVolunteer.addEventListener('click', function(e){ e.preventDefault(); setRole('volunteer'); });
+            roleOrg.addEventListener('click', function(e){ e.preventDefault(); setRole('organization'); });
 
-        // Mostra o formulário atual e adiciona classe "active" ao botão
-        document.getElementById(tabName).style.display = "block";
-        evt.currentTarget.className += " active";
-    }
-</script>
-
+            document.getElementById('signinForm').addEventListener('submit', function(e){
+                e.preventDefault();
+                const isOrg = orgFields.style.display !== 'none';
+                try{
+                    if(isOrg){
+                        const name = document.getElementById('orgName').value.trim() || 'Minha Organização';
+                        const email = document.getElementById('orgEmail').value.trim();
+                        const password = document.getElementById('orgPassword').value;
+                        const phone = document.getElementById('orgPhone').value.trim();
+                        const orgData = { name, email, phone, password };
+                        localStorage.setItem('orgData', JSON.stringify(orgData));
+                        localStorage.setItem('userRole', 'organization');
+                        localStorage.setItem('userName', name);
+                        window.location.href = 'dashboard.html';
+                    } else {
+                        const email = document.getElementById('volEmail').value.trim();
+                        const password = document.getElementById('volPassword').value;
+                        const phone = document.getElementById('volPhone').value.trim();
+                        const volData = { email, phone };
+                        localStorage.setItem('volunteerData', JSON.stringify(volData));
+                        localStorage.setItem('userRole', 'volunteer');
+                        localStorage.setItem('userName', email || 'Voluntário');
+                        window.location.href = 'index.html';
+                    }
+                } catch (err){
+                    console.error(err);
+                    alert('Ocorreu um erro. Tente novamente.');
+                }
+            });
+        })();
+    </script>
 </body>
 </html>

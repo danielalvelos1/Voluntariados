@@ -1,107 +1,347 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plataforma de Voluntariado</title>
+    <title>Voluntariados</title>
     <style>
-        /* Reset e Base */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #333; line-height: 1.6; overflow-x: hidden; }
-        
-        /* Header */
-        header { position: fixed; top: 0; width: 100%; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 10; }
-        header h1 { font-size: 1.5rem; font-weight: 300; color: #4CAF50; }
-        
-        /* Hero Section */
-        .hero { padding: 120px 20px 80px; text-align: center; max-width: 800px; margin: 0 auto; }
-        .hero h2 { font-size: 3rem; font-weight: 200; margin-bottom: 20px; color: #333; }
-        .hero p { font-size: 1.2rem; font-weight: 300; margin-bottom: 40px; color: #666; }
-        .hero .cta-buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .hero button { background: #4CAF50; color: white; border: none; padding: 15px 30px; font-size: 1rem; font-weight: 400; border-radius: 25px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3); }
-        .hero button:hover { background: #45a049; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4); }
-        
-        /* Destaques */
-        .destaques { padding: 80px 20px; background: white; }
-        .destaques h3 { text-align: center; font-size: 2rem; font-weight: 200; margin-bottom: 40px; color: #333; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; max-width: 1000px; margin: 0 auto; }
-        .card { background: #f9f9f9; padding: 30px; border-radius: 15px; text-align: center; transition: transform 0.3s ease; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .card:hover { transform: translateY(-5px); }
-        .card h4 { font-size: 1.5rem; font-weight: 300; margin-bottom: 15px; color: #4CAF50; }
-        .card p { font-size: 1rem; color: #666; }
-        .card .icon { font-size: 3rem; margin-bottom: 20px; }
-        
-        /* Footer */
-        footer { padding: 40px 20px; text-align: center; background: #333; color: white; font-size: 0.9rem; }
-        footer a { color: #4CAF50; text-decoration: none; }
-        
-        /* Responsividade */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #ffffff;
+            color: #1d1d1f;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e8f5e1;
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.08);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #666666;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: #10b981;
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .nav-btn-primary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .nav-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
+        }
+
+        .nav-btn-secondary {
+            background-color: #f9fdf8;
+            color: #10b981;
+            border: 2px solid #10b981;
+        }
+
+        .nav-btn-secondary:hover {
+            background-color: #f0fdf4;
+            transform: translateY(-2px);
+        }
+
+        header {
+            padding: 60px 20px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, #f0fdf4 0%, #f5fdf9 100%);
+            border-bottom: 1px solid #e8f5e1;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: #666666;
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Project styles removed from index (projects live in projetos.html) */
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6b7280;
+            font-size: 0.9rem;
+            border-top: 1px solid #e8f5e1;
+            background-color: #f9fdf8;
+        }
+
+        /* Badges de destaque */
+        .badge {
+            display: inline-block;
+            background-color: #d1fae5;
+            color: #059669;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-left: 8px;
+            text-transform: uppercase;
+        }
+
         @media (max-width: 768px) {
-            .hero h2 { font-size: 2rem; }
-            .hero p { font-size: 1rem; }
-            .hero .cta-buttons { flex-direction: column; align-items: center; }
-            .grid { grid-template-columns: 1fr; }
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 40px 16px;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .project-card {
+                padding: 24px;
+            }
+
+            .nav-menu {
+                gap: 10px;
+            }
+
+            .nav-btn {
+                padding: 8px 14px;
+                font-size: 0.8rem;
+            }
         }
     </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
-    <header>
-        <h1>🌱 Voluntariado Comunitário</h1>
+    <!-- Navigation -->
+    <nav class="py-3">
+        <div class="nav-container">
+            <a href="index.html" class="logo">🌱 Voluntariados</a>
+            <ul class="nav-menu">
+                <li><a href="projetos.html" class="nav-btn nav-btn-secondary">Ver Projetos</a></li>
+                <li><a href="dashboard.html" class="nav-btn nav-btn-primary">Meu Dashboard</a></li>
+                <li><a href="messages.html" class="nav-btn">Mensagens <span class="msg-badge msg-badge--nav msg-badge" style="display:none">0</span></a></li>
+                <li style="position:relative">
+                    <button id="authToggle" aria-haspopup="true" aria-expanded="false" class="nav-btn" style="border:1px solid var(--brand-500);padding:8px 10px;border-radius:8px;color:var(--brand-500);display:flex;align-items:center;gap:8px">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;color:inherit"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;color:inherit"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div id="authMenu" style="position:absolute;right:0;top:calc(100% + 8px);display:none;background:#ffffff;border:1px solid #e8f5e1;border-radius:8px;padding:6px;box-shadow:0 8px 20px rgba(16,185,129,0.12);min-width:160px;z-index:999">
+                        <a href="register.html" style="display:block;padding:8px 12px;color:#1d1d1f;text-decoration:none;border-radius:6px">Criar Conta</a>
+                        <a href="login.html" style="display:block;padding:8px 12px;color:#1d1d1f;text-decoration:none;border-radius:6px">Iniciar Sessão</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="text-center py-5">
+        <div class="container">
+            <h1>Conectamos voluntários a projetos que transformam comunidades</h1>
+            <p class="lead text-muted">Encontre oportunidades locais, participe em ações concretas e acompanhe o impacto das suas horas de voluntariado.</p>
+            <div class="d-flex justify-content-center gap-3 mt-4">
+                <a href="projetos.html" class="cta-button">Explorar Projetos</a>
+                <a href="register.html" class="cta-button" style="background:#fff;color:var(--brand-500);border:2px solid var(--brand-500)">Criar Conta</a>
+            </div>
+        </div>
     </header>
-    
-    <section class="hero">
-        <h2>Faça a Diferença</h2>
-        <p>Participe de iniciativas para que possa ganhar pontos e troque por itens essenciais na nossa loja virtual.</p>
-        <div class="cta-buttons">
-            <button onclick="window.location.href='login.html'">Começar Agora</button>
-            <button onclick="window.location.href='iniciativas.html'">Explorar Iniciativas</button>
-        </div>
-    </section>
-    
-    <section class="destaques">
-        <h3>Por Que Participar?</h3>
-        <div class="grid">
-            <div class="card">
-                <div class="icon">🌳</div>
-                <h4>Impacto Comunitário</h4>
-                <p>Ajude a construir um futuro melhor para todos.</p>
+
+    <main class="container">
+        <!-- Features -->
+        <section id="sobre" class="py-4">
+            <div class="row g-4 align-items-center">
+                <div class="col-md-6">
+                    <h2>O que fazemos</h2>
+                    <p class="text-muted">Facilitamos a ligação entre organizações e pessoas que querem doar tempo. Desde micro-tarefas a compromissos regulares — descubra onde as suas habilidades fazem sentido.</p>
+                    <ul class="list-unstyled mt-3">
+                        <li class="mb-2">• Catálogo de projetos locais com filtros por área e disponibilidade</li>
+                        <li class="mb-2">• Calendário e agendamento simplificado</li>
+                        <li class="mb-2">• Perfil para organizações com detalhes e gestão de vagas</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <div style="background:#fff;border-radius:12px;padding:18px;border:1px solid #e8f5e1">
+                        <h5 style="margin-bottom:8px">Para organizações</h5>
+                        <p class="text-muted">Publique vagas, organize turnos e comunique com voluntários.</p>
+                        <h5 style="margin-top:12px;margin-bottom:8px">Para voluntários</h5>
+                        <p class="text-muted">Pesquise por impacto, marque disponibilidade e acompanhe o seu historial.</p>
+                    </div>
+                </div>
             </div>
-            <div class="card">
-                <div class="icon">🏆</div>
-                <h4>Ganhe Pontos</h4>
-                <p>Acumule recompensas por cada participação.</p>
+        </section>
+
+        <!-- How it works -->
+        <section class="py-4">
+            <h3 class="mb-3">Como funciona</h3>
+            <div class="row g-3">
+                <div class="col-sm-6 col-lg-3">
+                    <div style="background:#fff;padding:16px;border-radius:10px;border:1px solid #e8f5e1">
+                        <h5>1. Encontre</h5>
+                        <p class="text-muted">Navegue por projetos com filtros por categoria, cidade e disponibilidade.</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div style="background:#fff;padding:16px;border-radius:10px;border:1px solid #e8f5e1">
+                        <h5>2. Inscreva-se</h5>
+                        <p class="text-muted">Reserve uma vaga ou participe numa sessão informativa.</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div style="background:#fff;padding:16px;border-radius:10px;border:1px solid #e8f5e1">
+                        <h5>3. Participe</h5>
+                        <p class="text-muted">Realize a atividade e registe as horas e aprendizagens.</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div style="background:#fff;padding:16px;border-radius:10px;border:1px solid #e8f5e1">
+                        <h5>4. Impacto</h5>
+                        <p class="text-muted">Veja relatórios e testemunhos do que a ação produziu.</p>
+                    </div>
+                </div>
             </div>
-            <div class="card">
-                <div class="icon">🛒</div>
-                <h4>Loja Virtual</h4>
-                <p>Troque pontos por itens essenciais do dia a dia.</p>
+        </section>
+
+        <!-- FAQ -->
+        <section class="py-4">
+            <h3 class="mb-3">Perguntas Frequentes</h3>
+            <div class="accordion" id="faqAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq1"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">Preciso de criar conta para ver projetos?</button></h2>
+                    <div id="collapse1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body text-muted">Não — pode explorar projetos anonimamente. Registar permite inscrever-se e gerir inscrições.</div></div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq2"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">Como as organizações validam voluntários?</button></h2>
+                    <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body text-muted">Cada organização define requisitos; a plataforma facilita contacto e partilha de documentação.</div></div>
+                </div>
             </div>
-        </div>
-    </section>
-    
+        </section>
+
+        <section class="py-4 text-center">
+            <h4>Pronto para começar?</h4>
+            <div class="d-flex justify-content-center gap-3 mt-3">
+                <a href="projetos.html" class="cta-button">Explorar Projetos</a>
+                <a href="register.html" class="cta-button" style="background:#fff;color:var(--brand-500);border:2px solid var(--brand-500)">Criar Conta</a>
+            </div>
+        </section>
+    </main>
+
     <footer>
-        <p>&copy; 2025 Plataforma de Voluntariado. <a href="#">Termos de Uso</a> | <a href="#">Privacidade</a></p>
+        <div class="container text-center py-4 text-muted">&copy; 2026 Plataforma de Voluntariados — Conectando pessoas e projetos.</div>
     </footer>
-    
+
+    <script src="app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/bootstrap-init.js"></script>
+    <script src="js/site.js"></script>
     <script>
-        // Inicializar dados simulados no localStorage se não existirem
-        if (!localStorage.getItem('usuarios')) {
-            localStorage.setItem('usuarios', JSON.stringify([]));
-        }
-        if (!localStorage.getItem('iniciativas')) {
-            localStorage.setItem('iniciativas', JSON.stringify([
-                { id: 1, titulo: 'Plantação de Árvores', descricao: 'Ajude a plantar 100 árvores na praça central.', pontos: 50, inscritos: [] },
-                { id: 2, titulo: 'Apoio em Bibliotecas', descricao: 'Organize livros e ajude leitores.', pontos: 30, inscritos: [] },
-                { id: 3, titulo: 'Campanha de Doação de Sangue', descricao: 'Doe sangue e salve vidas.', pontos: 100, inscritos: [] }
-            ]));
-        }
-        if (!localStorage.getItem('loja')) {
-            localStorage.setItem('loja', JSON.stringify([
-                { id: 1, nome: 'Sacola de Alimentos Básicos', pontos: 200 },
-                { id: 2, nome: 'Kit de Higiene Pessoal', pontos: 150 },
-                { id: 3, nome: 'Vale para Transporte Público', pontos: 100 }
-            ]));
-        }
+        (function(){
+            try{
+                const role = localStorage.getItem('userRole');
+                // show 'Meu Dashboard' only for organizations
+                if(role !== 'organization'){
+                    document.querySelectorAll('a[href="dashboard.html"]').forEach(a => {
+                        const li = a.closest('li');
+                        if(li) li.style.display = 'none'; else a.style.display = 'none';
+                    });
+                }
+            }catch(e){}
+        })();
+    </script>
+    <script>
+        (function(){
+            function setupAuthToggle(){
+                const toggle = document.getElementById('authToggle');
+                const menu = document.getElementById('authMenu');
+                if (!toggle || !menu) return;
+                document.addEventListener('click', function(e){
+                    if (toggle.contains(e.target)){
+                        const expanded = toggle.getAttribute('aria-expanded') === 'true';
+                        toggle.setAttribute('aria-expanded', String(!expanded));
+                        menu.style.display = expanded ? 'none' : 'block';
+                        return;
+                    }
+                    if (!menu.contains(e.target)){
+                        menu.style.display = 'none';
+                        toggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+            document.addEventListener('DOMContentLoaded', setupAuthToggle);
+        })();
     </script>
 </body>
 </html>

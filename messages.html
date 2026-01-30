@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Mensagens - Voluntariados</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+    <nav style="background:#fff;border-bottom:1px solid #e8f5e1;padding:12px">
+        <div class="nav-container">
+            <div class="logo">🌱 Voluntariados</div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-btn">Início</a></li>
+                <li><a href="projetos.html" class="nav-btn nav-btn-secondary">Projetos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="text-center py-5" style="background:linear-gradient(135deg,#f0fdf4 0%,#f5fdf9 100%);border-bottom:1px solid #e8f5e1;">
+        <div class="container">
+            <h1 style="font-size:2rem;">Mensagens</h1>
+            <p class="lead" style="color:#666;max-width:700px;margin:8px auto 0">Converse com organizações, marque mensagens importantes e mantenha sua caixa organizada.</p>
+        </div>
+    </header>
+
+    <main class="container" style="padding-top:28px">
+        <div class="messages-layout">
+            <aside class="convo-list" aria-label="Lista de conversas">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+                    <strong style="font-size:1rem">Conversas</strong>
+                    <button id="newConvoBtn" class="role-btn" style="padding:6px 10px">Nova</button>
+                </div>
+                <div id="convoList"></div>
+                    <div class="convo-search">
+                        <input id="convoSearch" placeholder="Pesquisar conversas" aria-label="Pesquisar conversas">
+                    </div>
+            </aside>
+
+            <main class="messages-panel" id="messagesPanel" role="main">
+                <div id="messagesWindow" class="messages-window" aria-live="polite">
+                    <!-- messages render here -->
+                </div>
+
+                    <div class="panel-header">
+                        <div style="display:flex;align-items:center;gap:10px">
+                            <div id="panelAvatar" class="convo-avatar">O</div>
+                            <div>
+                                <div id="panelTitle" class="panel-title">Selecione uma conversa</div>
+                                <div id="panelSub" class="panel-sub">Mensagens serão exibidas aqui</div>
+                            </div>
+                        </div>
+                        <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+                            <button id="favListBtn" class="role-btn" title="Mostrar favoritos">Favoritos</button>
+                        </div>
+                    </div>
+
+                <div class="msg-input">
+                    <textarea id="msgInput" placeholder="Escreva uma mensagem..." aria-label="Escreva uma mensagem"></textarea>
+                    <button id="sendBtn" class="btn-primary" type="button">Enviar</button>
+                </div>
+            </main>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/messages.js"></script>
+</body>
+</html>

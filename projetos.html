@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorar Projetos - Voluntariados</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f9fdf8;
+            color: #1d1d1f;
+            line-height: 1.6;
+
+            /* Navbar */
+            nav {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e8f5e1;
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.08);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #666666;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: #10b981;
+        }
+
+        .nav-menu a.active {
+            color: #10b981;
+            border-bottom: 2px solid #10b981;
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header Section */
+        .header-section {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .header-section h1 {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+            color: #1d1d1f;
+        }
+
+        .header-section p {
+            color: #6b7280;
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Filters Section */
+        .filters-section {
+            margin-bottom: 40px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid #e8f5e1;
+            background-color: #ffffff;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b7280;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn:hover {
+            border-color: #10b981;
+            color: #10b981;
+            background-color: #f0fdf4;
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border-color: #10b981;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 28px;
+            margin-bottom: 40px;
+        }
+
+        .project-card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e8f5e1;
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            border-color: #10b981;
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.15);
+        }
+
+        /* Project Card Header */
+        .project-header {
+            background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+            padding: 28px 24px;
+            border-bottom: 1px solid #e8f5e1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(16, 185, 129, 0.08);
+            border-radius: 50%;
+        }
+
+        .category-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #d1fae5 0%, #ecfdf5 100%);
+            color: #059669;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Project Card Body */
+        .project-body {
+            padding: 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-description {
+            color: #5a6a5a;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        /* Project Details */
+        .project-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #e8f5e1;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .detail-icon {
+            font-size: 1.2rem;
+            color: #10b981;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .detail-content {
+            flex: 1;
+        }
+
+        .detail-label {
+            color: #6b7280;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .detail-value {
+            color: #1d1d1f;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Project Stats */
+        .project-stats {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #e8f5e1;
+        }
+
+        .stat-box {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            background-color: #f9fdf8;
+            border-radius: 10px;
+        }
+
+        .stat-number {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #10b981;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        /* Volunteer List */
+        .volunteers-section {
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #e8f5e1;
+        }
+
+        .volunteers-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .volunteer-avatars {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border: 2px solid #ffffff;
+        }
+
+        .more-volunteers {
+            color: #10b981;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* CTA Buttons */
+        .cta-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-secondary {
+            flex: 1;
+            background-color: #f9fdf8;
+            color: #10b981;
+            padding: 12px 20px;
+            border: 2px solid #10b981;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-secondary:hover {
+            background-color: #f0fdf4;
+            transform: translateY(-2px);
+        }
+
+        /* Search Box */
+        .search-section {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            padding: 14px 20px;
+            border: 2px solid #e8f5e1;
+            border-radius: 12px;
+            font-size: 1rem;
+            background-color: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: #ffffff;
+            border-radius: 14px;
+            border: 1px solid #e8f5e1;
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+
+        .empty-state h3 {
+            font-size: 1.2rem;
+            color: #1d1d1f;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .header-section h1 {
+                font-size: 1.6rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-details {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .filters-section {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 8px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">🌱 Voluntariados</div>
+            <ul class="nav-menu">
+                <li><a href="projetos.html">Projetos</a></li>
+                <li><a href="dashboard.html">Meu Dashboard</a></li>
+                <li><a href="messages.html">Mensagens <span class="msg-badge" style="display:none">0</span></a></li>
+                <li><a href="index.html#sobre">Sobre</a></li>
+                <li style="position:relative">
+                    <button id="authToggle" aria-haspopup="true" aria-expanded="false" class="nav-btn" style="border:1px solid #10b981;padding:8px 10px;border-radius:8px;color:#10b981;display:flex;align-items:center;gap:8px">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;color:inherit"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;color:inherit"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div id="authMenu" style="position:absolute;right:0;top:calc(100% + 8px);display:none;background:#ffffff;border:1px solid #e8f5e1;border-radius:8px;padding:6px;box-shadow:0 8px 20px rgba(16,185,129,0.12);min-width:160px;z-index:999">
+                        <a href="register.html" style="display:block;padding:8px 12px;color:#1d1d1f;text-decoration:none;border-radius:6px">Criar Conta</a>
+                        <a href="login.html" style="display:block;padding:8px 12px;color:#1d1d1f;text-decoration:none;border-radius:6px">Iniciar Sessão</a>
+                    </div>
+                </li>
+                <li>
+                    <button class="logout-icon" aria-label="Terminar sessão" title="Terminar sessão" style="background:transparent;border:none;cursor:pointer;padding:8px;border-radius:8px;display:flex;align-items:center;gap:6px">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#ef4444"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Header -->
+        <div class="header-section">
+            <h1>Explore Projetos de Voluntariado</h1>
+            <p>Encontre um projeto que se alinhe com seus valores e faça a diferença na comunidade</p>
+        </div>
+
+        <!-- Search -->
+        <div class="search-section">
+            <input type="text" class="search-box" placeholder="🔍 Pesquise projetos por nome, categoria ou localização...">
+        </div>
+
+        <!-- Filters -->
+        <div class="filters-section">
+            <button class="filter-btn active" onclick="filterProjects('all', this)">Todos</button>
+            <button class="filter-btn" onclick="filterProjects('educacao', this)">📚 Educação</button>
+            <button class="filter-btn" onclick="filterProjects('saude', this)">🏥 Saúde</button>
+            <button class="filter-btn" onclick="filterProjects('ambiente', this)">🌍 Ambiente</button>
+            <button class="filter-btn" onclick="filterProjects('tecnologia', this)">💻 Tecnologia</button>
+            <button class="filter-btn" onclick="filterProjects('desporto', this)">⚽ Desporto</button>
+            <button class="filter-btn" onclick="filterProjects('assistencia', this)">🤝 Assistência</button>
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="projects-grid">
+            <!-- Project 1 -->
+            <div class="project-card" data-category="educacao">
+                <div class="project-header">
+                    <span class="category-badge">Educação</span>
+                    <h2 class="project-title">Aulas de Reforço</h2>
+                </div>
+                <div class="project-body">
+                    <p class="project-description">Apoie crianças e jovens com dificuldades escolares. Ensine matemática, português, inglês e outras disciplinas de forma personalizada.</p>
+                    
+                    <div class="project-stats">
+                        <div class="stat-box">
+                            <span class="stat-number">12</span>
+                            <span class="stat-label">Voluntários</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-number">47</span>
+                            <span class="stat-label">Beneficiários</span>
+                        </div>
+                    </div>
+
+                    <div class="project-details">
+                        <div class="detail-item">
+                            <div class="detail-icon">📍</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Localização</div>
+                                <div class="detail-value">Centro Educativo</div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">⏰</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Frequência</div>
+                                <div class="detail-value">2-3x por semana</div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">👥</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Vagas</div>
+                                <div class="detail-value">5 disponíveis</div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">⏱️</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Duração</div>
+                                <div class="detail-value">2-3 horas</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="volunteers-section">
+                        <div class="volunteers-title">Voluntários neste projeto</div>
+                        <div class="volunteer-avatars">
+                            <div class="avatar">MS</div>
+                            <div class="avatar">JC</div>
+                            <div class="avatar">AR</div>
+                            <span class="more-volunteers">+9 mais</span>
+                        </div>
+                    </div>
+
+                    <div class="cta-buttons">
+                        <button class="btn-primary" onclick="enrollProject('Aulas de Reforço', this)">Inscrever-se</button>
+                        <button class="btn-secondary">Mais Info</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card" data-category="saude">
+                <div class="project-header">
+                    <span class="category-badge">Saúde</span>
+                    <h2 class="project-title">Apoio Comunitário</h2>
+                </div>
+                <div class="project-body">
+                    <p class="project-description">Visite pessoas idosas, ofereça companhia, ajude em tarefas do dia a dia e traga alegria para quem mais precisa de apoio.</p>
+                    
+                    <div class="project-stats">
+                        <div class="stat-box">
+                            <span class="stat-number">18</span>
+                            <span class="stat-label">Voluntários</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-number">23</span>
+                            <span class="stat-label">Beneficiários</span>
+                        </div>
+                    </div>
+
+                    <div class="project-details">
+                        <div class="detail-item">
+                            <div class="detail-icon">📍</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Localização</div>
+                                <div class="detail-value">Vários locais</div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">⏰</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Frequência</div>
+                                <div class="detail-value">Flexível</div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">👥</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Vagas</div>
+                                <div class="detail-value">8 disponíveis</div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">⏱️</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Duração</div>
+                                <div class="detail-value">1-2 horas</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="volunteers-section">
+                        <div class="volunteers-title">Voluntários neste projeto</div>
+                        <div class="volunteer-avatars">
+                            <div class="avatar">CP</div>
+                            <div class="avatar">RT</div>
+                            <span class="more-volunteers">+16 mais</span>
+                        </div>
+                    </div>
+
+                    <div class="cta-buttons">
+                        <button class="btn-primary" onclick="enrollProject('Apoio Comunitário', this)">Inscrever-se</button>
+                        <button class="btn-secondary">Mais Info</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card" data-category="ambiente">
+                <div class="project-header">
+                    <span class="category-badge">Ambiente</span>
+                    <h2 class="project-title">Limpeza Urbana</h2>
+                </div>
+                <div class="project-body">
+                    <p class="project-description">Participe em ações de limpeza e preservação ambiental. Contribua para uma cidade mais limpa, verde e sustentável para todos.</p>
+                    
+                    <div class="project-stats">
+                        <div class="stat-box">
+                            <span class="stat-number">34</span>
+                            <span class="stat-label">Voluntários</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-number">500+</span>
+                            <span class="stat-label">Kg reciclados</span>
+                        </div>
+                    </div>
+
+                    <div class="project-details">
+                        <div class="detail-item">
+                            <div class="detail-icon">📍</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Localização</div>
+                                <div class="detail-value">Diversas áreas</div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">⏰</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Frequência</div>
+                                <div class="detail-value">1-2x por semana</div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">👥</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Vagas</div>
+                                <div class="detail-value">15 disponíveis</div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">⏱️</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Duração</div>
+                                <div class="detail-value">3-4 horas</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="volunteers-section">
+                        <div class="volunteers-title">Voluntários neste projeto</div>
+                        <div class="volunteer-avatars">
+                            <div class="avatar">LP</div>
+                            <div class="avatar">MF</div>
+                            <div class="avatar">NS</div>
+                            <span class="more-volunteers">+31 mais</span>
+                        </div>
+                    </div>
+
+                    <div class="cta-buttons">
+                        <button class="btn-primary" onclick="enrollProject('Limpeza Urbana', this)">Inscrever-se</button>
+                        <button class="btn-secondary">Mais Info</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-card" data-category="tecnologia">
+                <div class="project-header">
+                    <span class="category-badge">Tecnologia</span>
+                    <h2 class="project-title">Literacia Digital</h2>
+                </div>
+                <div class="project-body">
+                    <p class="project-description">Ensine tecnologia e internet a pessoas com dificuldades. Ajude a aproximá-las do mundo digital e novas oportunidades.</p>
+                    
+                    <div class="project-stats">
+                        <div class="stat-box">
+                            <span class="stat-number">8</span>
+                            <span class="stat-label">Voluntários</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-number">35</span>
+                            <span class="stat-label">Beneficiários</span>
+                        </div>
+                    </div>
+
+                    <div class="project-details">
+                        <div class="detail-item">
+                            <div class="detail-icon">📍</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Localização</div>
+                                <div class="detail-value">Centro Comunitário</div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">⏰</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Frequência</div>
+                                <div class="detail-value">3-4x por semana</div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">👥</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Vagas</div>
+                                <div class="detail-value">3 disponíveis</div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">⏱️</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Duração</div>
+                                <div class="detail-value">2 horas</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="volunteers-section">
+                        <div class="volunteers-title">Voluntários neste projeto</div>
+                        <div class="volunteer-avatars">
+                            <div class="avatar">DM</div>
+                            <div class="avatar">RB</div>
+                            <span class="more-volunteers">+6 mais</span>
+                        </div>
+                    </div>
+
+                    <div class="cta-buttons">
+                        <button class="btn-primary" onclick="enrollProject('Literacia Digital', this)">Inscrever-se</button>
+                        <button class="btn-secondary">Mais Info</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="project-card" data-category="desporto">
+                <div class="project-header">
+                    <span class="category-badge">Desporto</span>
+                    <h2 class="project-title">Atividades Desportivas</h2>
+                </div>
+                <div class="project-body">
+                    <p class="project-description">Organize e facilite atividades desportivas comunitárias. Promova saúde, bem-estar e integração social para crianças e adultos.</p>
+                    
+                    <div class="project-stats">
+                        <div class="stat-box">
+                            <span class="stat-number">21</span>
+                            <span class="stat-label">Voluntários</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-number">89</span>
+                            <span class="stat-label">Participantes</span>
+                        </div>
+                    </div>
+
+                    <div class="project-details">
+                        <div class="detail-item">
+                            <div class="detail-icon">📍</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Localização</div>
+                                <div class="detail-value">Parques & Ginásios</div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">⏰</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Frequência</div>
+                                <div class="detail-value">Fins de semana</div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">👥</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Vagas</div>
+                                <div class="detail-value">6 disponíveis</div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">⏱️</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Duração</div>
+                                <div class="detail-value">2-3 horas</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="volunteers-section">
+                        <div class="volunteers-title">Voluntários neste projeto</div>
+                        <div class="volunteer-avatars">
+                            <div class="avatar">CF</div>
+                            <div class="avatar">TP</div>
+                            <div class="avatar">BC</div>
+                            <span class="more-volunteers">+18 mais</span>
+                        </div>
+                    </div>
+
+                    <div class="cta-buttons">
+                        <button class="btn-primary" onclick="enrollProject('Atividades Desportivas', this)">Inscrever-se</button>
+                        <button class="btn-secondary">Mais Info</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6 -->
+            <div class="project-card" data-category="assistencia">
+                <div class="project-header">
+                    <span class="category-badge">Assistência</span>
+                    <h2 class="project-title">Banco de Alimentos</h2>
+                </div>
+                <div class="project-body">
+                    <p class="project-description">Ajude na coleta, organização e distribuição de alimentos a famílias vulneráveis. Ninguém deve passar fome na comunidade.</p>
+                    
+                    <div class="project-stats">
+                        <div class="stat-box">
+                            <span class="stat-number">25</span>
+                            <span class="stat-label">Voluntários</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-number">156</span>
+                            <span class="stat-label">Famílias</span>
+                        </div>
+                    </div>
+
+                    <div class="project-details">
+                        <div class="detail-item">
+                            <div class="detail-icon">📍</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Localização</div>
+                                <div class="detail-value">Armazém Central</div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">⏰</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Frequência</div>
+                                <div class="detail-value">2x por semana</div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">👥</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Vagas</div>
+                                <div class="detail-value">10 disponíveis</div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">⏱️</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Duração</div>
+                                <div class="detail-value">3 horas</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="volunteers-section">
+                        <div class="volunteers-title">Voluntários neste projeto</div>
+                        <div class="volunteer-avatars">
+                            <div class="avatar">HS</div>
+                            <div class="avatar">LM</div>
+                            <div class="avatar">PV</div>
+                            <span class="more-volunteers">+22 mais</span>
+                        </div>
+                    </div>
+
+                    <div class="cta-buttons">
+                        <button class="btn-primary" onclick="enrollProject('Banco de Alimentos', this)">Inscrever-se</button>
+                        <button class="btn-secondary">Mais Info</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function filterProjects(category, btn) {
+            // Update active filter
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+
+            // Filter projects
+            const projects = document.querySelectorAll('.project-card');
+            projects.forEach(project => {
+                if (category === 'all' || project.dataset.category === category) {
+                    project.style.display = 'block';
+                } else {
+                    project.style.display = 'none';
+                }
+            });
+        }
+
+        function enrollProject(projectName, btn) {
+            // Attach inline picker to the project card; toggle if already present
+            const card = btn ? btn.closest('.project-card') : null;
+            if (card) {
+                const existing = card.querySelector('.inline-calendar');
+                if (existing) { existing.remove(); return; }
+            }
+
+            const container = document.createElement('div');
+            container.className = 'inline-calendar';
+
+            const label = document.createElement('label');
+            label.textContent = 'Escolha data/hora:';
+
+            const input = document.createElement('input');
+            input.type = 'datetime-local';
+            input.className = 'calendario-input-inline';
+
+            const pad = n => n.toString().padStart(2, '0');
+            const now = new Date();
+            now.setMinutes(0,0,0);
+            now.setHours(now.getHours() + 1);
+            input.value = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+            const minDate = new Date(); minDate.setMinutes(0,0,0);
+            input.min = `${minDate.getFullYear()}-${pad(minDate.getMonth()+1)}-${pad(minDate.getDate())}T${pad(minDate.getHours())}:${pad(minDate.getMinutes())}`;
+
+            const preview = document.createElement('div');
+            preview.className = 'date-preview';
+            function updatePreview(){
+                try{
+                    const d = input.value ? new Date(input.value) : null;
+                    if (d && !isNaN(d.getTime())){
+                        preview.textContent = d.toLocaleString('pt-PT', {dateStyle:'medium', timeStyle:'short'});
+                    } else preview.textContent = '';
+                }catch(e){ preview.textContent = ''; }
+            }
+            updatePreview();
+            input.addEventListener('input', updatePreview);
+
+            const controls = document.createElement('div');
+            controls.className = 'controls';
+
+            const confirm = document.createElement('button');
+            confirm.className = 'btn-primary';
+            confirm.textContent = 'Confirmar reserva';
+            confirm.type = 'button';
+            confirm.onclick = function(){
+                const val = input.value;
+                if (!val) { alert('Por favor selecione data/hora.'); return; }
+                try { marcarTurno(projectName, val); } catch(e){ alert('Erro ao registrar a reserva.'); }
+            };
+
+            const cancel = document.createElement('button');
+            cancel.className = 'btn-secondary';
+            cancel.textContent = 'Cancelar';
+            cancel.type = 'button';
+            cancel.onclick = function(){ container.remove(); };
+
+            controls.appendChild(confirm);
+            controls.appendChild(cancel);
+
+            container.appendChild(label);
+            container.appendChild(input);
+            container.appendChild(preview);
+            container.appendChild(controls);
+
+            if (card) {
+                const target = card.querySelector('.cta-buttons');
+                if (target) target.parentNode.insertBefore(container, target.nextSibling);
+            } else {
+                document.querySelector('.container').appendChild(container);
+            }
+            input.focus();
+        }
+
+        function logout() {
+            alert('Saindo da plataforma...');
+            window.location.href = 'index.html';
+        }
+    </script>
+        <script>
+            (function(){
+                document.addEventListener('DOMContentLoaded', function(){
+                    try{
+                        const role = localStorage.getItem('userRole');
+                        if(role === 'volunteer'){
+                            document.querySelectorAll('a[href="dashboard.html"]').forEach(a=>{
+                                const li = a.closest('li'); if(li) li.style.display='none'; else a.style.display='none';
+                            });
+                        }
+                    }catch(e){}
+
+                    // Auth dropdown toggle
+                    const toggle = document.getElementById('authToggle');
+                    const menu = document.getElementById('authMenu');
+                    if(toggle && menu){
+                        document.addEventListener('click', function(e){
+                            if (toggle.contains(e.target)){
+                                const expanded = toggle.getAttribute('aria-expanded') === 'true';
+                                toggle.setAttribute('aria-expanded', String(!expanded));
+                                menu.style.display = expanded ? 'none' : 'block';
+                                return;
+                            }
+                            if (!menu.contains(e.target)){
+                                menu.style.display = 'none';
+                                toggle.setAttribute('aria-expanded', 'false');
+                            }
+                        });
+                        document.addEventListener('keydown', function(e){ if (e.key === 'Escape'){ menu.style.display='none'; toggle.setAttribute('aria-expanded','false'); }});
+                    }
+                });
+            })();
+        </script>
+
+    
+
+    <script src="js/calendar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/bootstrap-init.js"></script>
+    <script src="js/site.js"></script>
+</body>
+</html>
