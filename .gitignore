@@ -1,0 +1,7 @@
+.vs/
+.vscode/
+.DS_Store
+node_modules/
+*.log
+firebase-debug.log
+*.local

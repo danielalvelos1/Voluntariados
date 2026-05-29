@@ -8,19 +8,20 @@
     <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
-    <nav style="background:#fff;border-bottom:1px solid #e8f5e1;padding:12px">
+    <nav>
         <div class="nav-container">
             <div class="logo">🌱 Voluntariados</div>
             <ul class="nav-menu">
-                <li><a href="index.html" class="nav-btn">Início</a></li>
-                <li><a href="projetos.html" class="nav-btn nav-btn-secondary">Projetos</a></li>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="projetos.html">Projetos</a></li>
+                <li><span class="auth-greeting" aria-live="polite"></span></li>
             </ul>
         </div>
     </nav>
 
-    <header class="text-center py-5" style="background:linear-gradient(135deg,#f0fdf4 0%,#f5fdf9 100%);border-bottom:1px solid #e8f5e1;">
+    <header class="text-center py-5 page-hero">
         <div class="container">
-            <h1 style="font-size:2rem;">Mensagens</h1>
+            <h1 class="page-title">Mensagens</h1>
             <p class="lead" style="color:#666;max-width:700px;margin:8px auto 0">Converse com organizações, marque mensagens importantes e mantenha sua caixa organizada.</p>
         </div>
     </header>
@@ -28,9 +29,9 @@
     <main class="container" style="padding-top:28px">
         <div class="messages-layout">
             <aside class="convo-list" aria-label="Lista de conversas">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+                <div class="d-flex align-items-center justify-content-between mb-2">
                     <strong style="font-size:1rem">Conversas</strong>
-                    <button id="newConvoBtn" class="role-btn" style="padding:6px 10px">Nova</button>
+                    <button id="newConvoBtn" class="btn btn-sm btn-outline-success">Nova</button>
                 </div>
                 <div id="convoList"></div>
                     <div class="convo-search">
@@ -43,7 +44,7 @@
                     <!-- messages render here -->
                 </div>
 
-                    <div class="panel-header">
+                    <div class="panel-header" role="region" aria-label="Cabeçalho da conversa">
                         <div style="display:flex;align-items:center;gap:10px">
                             <div id="panelAvatar" class="convo-avatar">O</div>
                             <div>
@@ -52,19 +53,23 @@
                             </div>
                         </div>
                         <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
-                            <button id="favListBtn" class="role-btn" title="Mostrar favoritos">Favoritos</button>
+                            <button id="favListBtn" class="btn btn-sm btn-outline-secondary" title="Mostrar favoritos">Favoritos</button>
                         </div>
                     </div>
 
-                <div class="msg-input">
-                    <textarea id="msgInput" placeholder="Escreva uma mensagem..." aria-label="Escreva uma mensagem"></textarea>
-                    <button id="sendBtn" class="btn-primary" type="button">Enviar</button>
+                <div class="msg-input" role="form" aria-label="Compositor de mensagem">
+                    <textarea id="msgInput" class="form-control" rows="3" placeholder="Escreva uma mensagem..." aria-label="Escreva uma mensagem"></textarea>
+                    <button id="sendBtn" class="btn btn-primary" type="button" disabled>Enviar</button>
                 </div>
             </main>
         </div>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-init.js"></script>
     <script src="js/messages.js"></script>
+    <script src="js/site.js"></script>
 </body>
 </html>
